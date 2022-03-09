@@ -8,3 +8,12 @@ export type User = {
   id: number
   name: string
 }
+
+export type Event = {
+  event_id: number
+  start: string
+  end: string
+  order: number
+  address: string
+  _cid?: string
+}
