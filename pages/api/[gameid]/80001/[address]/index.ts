@@ -1,7 +1,12 @@
 import Cors from 'cors'
 import initMiddleware from '../../../../../lib/init-middleware'
+import validateMiddleware from '../../../../../lib/validate-middleware'
+import withDatabase from '../../../../../lib/database-middleware'
+import saveEvent from '../../../../../lib/save-event'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { sampleEventData } from '../../../../../utils/sample-event'
+import { Event } from '../../../../../interfaces'
+import { check, validationResult } from 'express-validator'
 
 const cors = initMiddleware(
   Cors({
@@ -9,18 +14,22 @@ const cors = initMiddleware(
   })
 )
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const validateBody = initMiddleware(
+  validateMiddleware([
+      check('event_id').isInt(),
+      check('start').isISO8601(),
+      check('end').isISO8601(),
+      check('order').isInt()
+  ], validationResult)
+)
+
+const handler = async (req, res: NextApiResponse) => {
   const { query: {gameid, chainid, address }, method } = req
   await cors(req, res)
 
   switch (method) {
     case 'GET':
-      const resData = sampleEventData.map(e => {
-        return {
-          ...e,
-          address: address
-        }
-      })
+      const resData = await req.db.find({address: address}).toArray()
       try {
         if (!Array.isArray(resData)) {
           throw new Error('Cannot find user data')
@@ -31,8 +40,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
       break
     case 'POST':
-      // Update or create data in your database
-      res.status(200).json({})
+      await validateBody(req, res)
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+      }
+      const body: Event = req.body
+      res.status(200).json(body)
+      console.log(body)
+      saveEvent(req.db, body)
       break
     default:
       res.setHeader('Allow', ['GET', 'POST'])
@@ -40,4 +56,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default handler
+export default withDatabase(handler, "game-event");
