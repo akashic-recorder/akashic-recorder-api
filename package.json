@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.26.0",
+    "cors": "^2.8.5",
     "mongodb": "^4.4.1",
     "next": "latest",
     "react": "^17.0.2",
