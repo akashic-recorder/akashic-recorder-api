@@ -15,5 +15,5 @@ export type Event = {
   end: string
   order: number
   address: string
-  _cid?: string
+  cid?: string
 }
