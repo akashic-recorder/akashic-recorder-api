@@ -4,7 +4,6 @@ import validateMiddleware from '../../../../../lib/validate-middleware'
 import withDatabase from '../../../../../lib/database-middleware'
 import saveEvent from '../../../../../lib/save-event'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { sampleEventData } from '../../../../../utils/sample-event'
 import { Event } from '../../../../../interfaces'
 import { check, validationResult } from 'express-validator'
 
@@ -45,7 +44,10 @@ const handler = async (req, res: NextApiResponse) => {
       if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() })
       }
-      const body: Event = req.body
+      const body: Event = {
+        ...req.body,
+        address: address
+      }
       res.status(200).json(body)
       console.log(body)
       saveEvent(req.db, body)
