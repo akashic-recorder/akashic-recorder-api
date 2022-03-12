@@ -16,9 +16,10 @@ const cors = initMiddleware(
 const validateBody = initMiddleware(
   validateMiddleware([
       check('event_id').isInt(),
-      check('start').isISO8601(),
-      check('end').isISO8601(),
-      check('order').isInt()
+      check('start_time').isISO8601(),
+      check('end_time').isISO8601(),
+      check('event_name').isString(),
+      check('rank_num').isInt()
   ], validationResult)
 )
 

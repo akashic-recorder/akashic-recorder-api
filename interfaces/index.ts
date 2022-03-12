@@ -11,9 +11,10 @@ export type User = {
 
 export type Event = {
   event_id: number
-  start: string
-  end: string
-  order: number
-  address: string
+  start_time: string
+  end_time: string
+  event_name: string
+  rank_num: number
+  wallet_address?: string
   cid?: string
 }
