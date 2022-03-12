@@ -17,27 +17,32 @@ $ yarn dev
 
 ```
 $ export host=http://localhost:3000
+
+# for live demo
+# export host=https://akaschic-recorder-api.herokuapp.com
+
 $ export address=0xff93B45308FD417dF303D6515aB04D9e89a750Ca
 
 $ curl -X GET ${host}/api/1/80001/${address}
 
-[{"_id":"6228e760ccd880dc04ce6d54","event_id":"1","start":"2022-03-09 23:13:00","end":"2022-03-09 23:15:00","order":"1","address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca","cid":"QmVsUkKqg8pHkDMV4yPemssbguqQ7DdKzMFy57UaV69LeY","tx":"0xc5ec817fb7a4d25992104508443476ac7ef6f36a7b1d0eba2d8bb8378d9d8be4"}]
+[{"_id":"622c7b306cc3152dbf10ef41","event_id":"1","start_time":"2022-03-09T23:13:00Z","end_time":"2022-03-09T23:15:00Z","event_name":"Event 1","rank_num":"1","wallet_address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca","cid":"QmUeGkmHnJmJjyuuKuCAQxMRQPxtYVE7FiVFU4vN3d47c4","tx":"0x50fe073b089ec74c00e0290560ea58c3f9b0849624c010b4ddbae2469c165015"}]
 ```
 
 ## post
 
 ```
 $ curl -X POST -H "Content-Type: application/json" \
- -d '{"event_id": "1","start": "2022-03-10 00:13:00","end": "2022-03-10 00:15:00","order": "1"}' \
+ -d '{"event_id":"2","start_time": "2022-03-09T23:13:00Z","end_time": "2022-03-09T23:15:00Z","event_name": "Event 2","rank_num": "1"}' \
  ${host}/api/1/80001/${address}
 
-{"event_id":"1","start":"2022-03-10 00:13:00","end":"2022-03-10 00:15:00","order":"1","address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca"}
+{"event_id":"2","start_time":"2022-03-09T23:13:00Z","end_time":"2022-03-09T23:15:00Z","event_name":"Event 2","rank_num":"1","wallet_address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca"}
 
 $ curl -X GET ${host}/api/1/80001/${address}
-[{"_id":"6228e760ccd880dc04ce6d54","event_id":"1","start":"2022-03-09 23:13:00","end":"2022-03-09 23:15:00","order":"1","address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca","cid":"QmVsUkKqg8pHkDMV4yPemssbguqQ7DdKzMFy57UaV69LeY","tx":"0xc5ec817fb7a4d25992104508443476ac7ef6f36a7b1d0eba2d8bb8378d9d8be4"},{"_id":"6228e8bcbab05983f91a0bfd","event_id":"1","start":"2022-03-10 00:13:00","end":"2022-03-10 00:15:00","order":"1","address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca","cid":"QmRkHS3euFpi42vYfDRn8E98DJMS3S3Ci8rK8MLPntr8ou","tx":"0x127c134895d7df6a82770e62f44a99c3c1bf11e688b913d77a0e2cec30e97988"}]
+
+[{"_id":"622c7b306cc3152dbf10ef41","event_id":"1","start_time":"2022-03-09T23:13:00Z","end_time":"2022-03-09T23:15:00Z","event_name":"Event 1","rank_num":"1","wallet_address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca","cid":"QmUeGkmHnJmJjyuuKuCAQxMRQPxtYVE7FiVFU4vN3d47c4","tx":"0x50fe073b089ec74c00e0290560ea58c3f9b0849624c010b4ddbae2469c165015"},{"_id":"622c7bf76cc3152dbf10ef42","event_id":"2","start_time":"2022-03-09T23:13:00Z","end_time":"2022-03-09T23:15:00Z","event_name":"Event 2","rank_num":"1","wallet_address":"0xff93B45308FD417dF303D6515aB04D9e89a750Ca","cid":"QmNtEqa1ucS3AA8XwUMgBRg4ZcanPsGYssX3Erxfuk8h1f","tx":"0x5991f1113812adaa2ccbe9123b64c7453f13fb9af67eaeec79a2a92d3a9a561f"}]
 
 # check ipfs data
-# https://gateway.lighthouse.storage/ipfs/QmRkHS3euFpi42vYfDRn8E98DJMS3S3Ci8rK8MLPntr8ou
+# https://gateway.lighthouse.storage/ipfs/QmNtEqa1ucS3AA8XwUMgBRg4ZcanPsGYssX3Erxfuk8h1f
 # mumbai explorer
-# https://mumbai.polygonscan.com/tx/0x127c134895d7df6a82770e62f44a99c3c1bf11e688b913d77a0e2cec30e97988
+# https://mumbai.polygonscan.com/tx/0x5991f1113812adaa2ccbe9123b64c7453f13fb9af67eaeec79a2a92d3a9a561f
 ```
