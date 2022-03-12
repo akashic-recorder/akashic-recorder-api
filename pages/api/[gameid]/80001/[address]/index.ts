@@ -29,7 +29,7 @@ const handler = async (req, res: NextApiResponse) => {
 
   switch (method) {
     case 'GET':
-      const resData = await req.db.find({address: address}).toArray()
+      const resData = await req.db.find({wallet_address: address}).toArray()
       try {
         if (!Array.isArray(resData)) {
           throw new Error('Cannot find user data')
@@ -47,7 +47,7 @@ const handler = async (req, res: NextApiResponse) => {
       }
       const body: Event = {
         ...req.body,
-        address: address
+        wallet_address: address
       }
       res.status(200).json(body)
       console.log(body)
