@@ -19,7 +19,7 @@ $ yarn dev
 $ export host=http://localhost:3000
 
 # for live demo
-# export host=https://akaschic-recorder-api.herokuapp.com
+# export host=https://akashic-recorder-api.herokuapp.com
 
 $ export address=0xff93B45308FD417dF303D6515aB04D9e89a750Ca
 
