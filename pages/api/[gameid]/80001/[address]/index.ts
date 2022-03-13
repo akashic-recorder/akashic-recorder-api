@@ -25,11 +25,12 @@ const validateBody = initMiddleware(
 
 const handler = async (req, res: NextApiResponse) => {
   const { query: {gameid, chainid, address }, method } = req
+  const addressLower = address.toLowerCase()
   await cors(req, res)
 
   switch (method) {
     case 'GET':
-      const resData = await req.db.find({wallet_address: address}).toArray()
+      const resData = await req.db.find({wallet_address: addressLower}).toArray()
       try {
         if (!Array.isArray(resData)) {
           throw new Error('Cannot find user data')
@@ -47,7 +48,7 @@ const handler = async (req, res: NextApiResponse) => {
       }
       const body: Event = {
         ...req.body,
-        wallet_address: address
+        wallet_address: addressLower
       }
       res.status(200).json(body)
       console.log(body)
